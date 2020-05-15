@@ -126,7 +126,45 @@ Ce code donnera une liste `elixir` qui ressemble à ceci:
 ]
 ```
 
-Bon c'est un peu illisible mais voilà, je dois créer un parseur qui va rendre
-tout ça un peu fonctionnel, qui va gérer la mémoire et l'appel des fonctions.
-
+#### Le Parseur
+Bon mon parseur est composé des différentes instructions comme les déclarations de variables et fonctions puis un scope
+qui va permettre de limiter l'utilisateur des variables que dans les blocs dans lesquels elles sont définies. <br />
+```elixir
+[
+  %Parser.Functions{
+    body: [],
+    name: :addition,
+    return: nil,
+    scope: %{functions: %{}, name: :global, variables: %{}},
+    variables: %{}
+  },
+  %Parser.Functions{
+    body: [],
+    name: :plus_un,
+    return: nil,
+    scope: %{
+      functions: %{
+        addition: %Parser.Functions{
+          body: [],
+          name: :addition,
+          return: nil,
+          scope: %{functions: %{}, name: :global, variables: %{}},
+          variables: %{}
+        }
+      },
+      name: :global,
+      variables: %{}
+    },
+    variables: %{}
+  },
+  %Parser.Variables{name: :a, type: :entier, value: 15},
+  %Parser.Variables{name: :b, type: :entier, value: 12},
+  %Parser.Variables{name: :r, type: :entier, value: 0}
+]
+```
+Ici on voit que les fonctions sont rajoutées dans le scope global mais leurs variables n'apparaissent pas ici
+parce que ces variables sont enregistrées dans le scope de chaque fonction.
+<br />
+Ce n'est peut-être pas la manière optimale de faire mais voilà, c'est juste pour créer mon petit langage pour le moment
+et c'est beaucoup plus intuitif comme ça.<br />
 <strong>Yep, let's do it</strong>
