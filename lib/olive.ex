@@ -20,6 +20,7 @@ defmodule Olive do
   def start(_) do
     @content
       |> Lexer.start
-      |>Tokenizer.start
+      |> Tokenizer.start
+      |> Parser.start
   end
 end

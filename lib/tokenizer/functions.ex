@@ -14,7 +14,7 @@ defmodule Tokenizer.Functions do
     if (Kernel.length tokens) < 4, do: %{ t: :error, message: "La définition de la fonction est incorrecte"}
     [name | tail] = tokens
     params = make_args(tail)
-    %{ t: :function_definition, name: name, params: params}
+    %{ t: :function_definition, name: String.to_atom(name), params: params}
   end
 
   defp make_args(args) do
@@ -31,7 +31,7 @@ defmodule Tokenizer.Functions do
     case args do
       [type | r] ->
         [name | tail] = r
-        [%{ t: :variable_declaration, name: name, type: type }] ++ get_args(tail)
+        [%{ t: :variable_declaration, name: String.to_atom(name), type: String.to_atom(type) }] ++ get_args(tail)
       _ -> []
     end
   end
