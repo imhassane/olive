@@ -31,7 +31,7 @@ defmodule Tokenizer.Functions do
     case args do
       [type | r] ->
         [name | tail] = r
-        [%{ t: :variable_declaration, name: String.to_atom(name), type: String.to_atom(type) }] ++ get_args(tail)
+        [%{ t: :param_declaration, name: String.to_atom(name), type: String.to_atom(type) }] ++ get_args(tail)
       _ -> []
     end
   end
